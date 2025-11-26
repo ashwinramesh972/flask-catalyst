@@ -1,0 +1,29 @@
+version: "3.9"
+
+services:
+  backend:
+    build: .
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/app
+      - ./instance:/app/instance
+    environment:
+      - DATABASE_URL=sqlite:////app/instance/app.db
+    depends_on:
+      - db
+    command: python main.py
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: flask_catalyst
+      POSTGRES_USER: catalyst
+      POSTGRES_PASSWORD: catalyst123
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  postgres_data:
