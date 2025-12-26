@@ -1,6 +1,6 @@
 from flask import jsonify, request
 from flask_jwt_extended import create_access_token, create_refresh_token
-from ..models.user import User
+from app.models.user import User
 from .. import db
 from . import api_bp
 import datetime
