@@ -4,6 +4,7 @@ from app.models.user import User
 from .. import db
 from . import api_bp
 import datetime
+from ..utils.rate_limiter import limiter
 
 @api_bp.route("/auth/register", methods=["POST"])
 def register():
@@ -26,6 +27,7 @@ def register():
 
 
 @api_bp.route("/auth/login", methods=["POST"])
+@limiter.limit("10 per minute")
 def login():
     data = request.get_json()
     username = data.get("username")

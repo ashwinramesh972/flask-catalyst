@@ -6,7 +6,8 @@ from flask_cors import CORS
 from .utils.error_handler import register_error_handlers
 from .utils.logger import setup_logger
 from .utils.middleware import add_request_logging
-
+from .utils.rate_limiter import setup_rate_limiter
+from .utils.email import setup_email
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -27,6 +28,8 @@ def create_app(config_name: str = "default"):
     register_error_handlers(app)
     setup_logger(app)
     add_request_logging(app)
+    setup_rate_limiter(app)
+    setup_email(app)
 
     # Register API blueprint
     from .api import api_bp
