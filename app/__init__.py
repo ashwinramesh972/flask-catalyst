@@ -24,7 +24,16 @@ def create_app(config_name: str = "default"):
     db.init_app(app)
     migrate.init_app(app, db)
     jwt.init_app(app)
-    cors.init_app(app, resources={r"/api/*": {"origins": "*"}})
+
+    cors.init_app(app, resources={
+        r"/api/*": {
+            "origins": ["http://localhost:3000", "http://localhost:5173", "http://127.0.0.1:3000", "http://127.0.0.1:5173"],
+            "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+            "allow_headers": ["Content-Type", "Authorization"],
+            "supports_credentials": True
+        }
+    })
+
     register_error_handlers(app)
     setup_logger(app)
     add_request_logging(app)
@@ -39,6 +48,4 @@ def create_app(config_name: str = "default"):
     def health():
         return jsonify({"status": "healthy", "project": "flask-catalyst"}), 200
     
-    
-
     return app

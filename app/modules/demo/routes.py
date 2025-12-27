@@ -5,8 +5,9 @@ from app.utils.rate_limiter import limiter
 
 demo_bp = Blueprint("demo", __name__, url_prefix="/demo")
 
-demo_bp.route("/seed")(seed)
-demo_bp.route("/utils-demo")(
+demo_bp.route("/seed", methods=["GET"])(seed)  
+
+demo_bp.route("/utils-demo", methods=["GET", "POST"])(
     jwt_required()(
         limiter.limit("5 per minute")(utils_demo)
     )
