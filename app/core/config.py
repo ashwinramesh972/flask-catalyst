@@ -3,7 +3,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# Absolute path so Windows never fails
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 INSTANCE_PATH = os.path.join(BASE_DIR, "..", "..", "instance")
 

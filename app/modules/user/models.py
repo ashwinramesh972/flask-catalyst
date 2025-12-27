@@ -1,9 +1,6 @@
-from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
-
-# Use the global db from __init__.py
-from .. import db
+from app import db  
 
 class User(db.Model):
     __tablename__ = "users"
@@ -26,5 +23,6 @@ class User(db.Model):
             "id": self.id,
             "username": self.username,
             "email": self.email,
+            "role": self.role,
             "created_at": self.created_at.isoformat()
         }

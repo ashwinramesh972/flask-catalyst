@@ -23,16 +23,16 @@ class RequestFormatter(logging.Formatter):
         return super().format(record)
 
 def setup_logger(app):
-    # Create logs folder
+
     log_dir = os.path.join(app.instance_path, 'logs')
     os.makedirs(log_dir, exist_ok=True)
 
-    # Daily rotating log file
+
     log_file = os.path.join(log_dir, 'flask-catalyst.log')
     handler = RotatingFileHandler(log_file, maxBytes=10*1024*1024, backupCount=10)  # 10MB per file, 10 files
     handler.setLevel(logging.INFO)
 
-    # Beautiful format — exactly like your example
+
     formatter = RequestFormatter(
         fmt='[%(asctime)s] %(method)s %(url)s → %(status)d\n'
             '{\n'
@@ -52,7 +52,7 @@ def setup_logger(app):
     app.logger.addHandler(handler)
     app.logger.setLevel(logging.INFO)
 
-    # Also log to console in development
+
     if app.debug:
         console_handler = logging.StreamHandler()
         console_handler.setFormatter(formatter)
